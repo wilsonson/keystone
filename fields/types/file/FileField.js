@@ -24,6 +24,12 @@ const buildInitialState = (props) => ({
 	userSelectedFile: null,
 });
 
+const imgStyle = {
+	"maxWidth": "100%",
+	"width":"auto",
+	"height": "auto"
+}
+
 module.exports = Field.create({
 	propTypes: {
 		autoCleanup: PropTypes.bool,
@@ -121,15 +127,36 @@ module.exports = Field.create({
 	// RENDERERS
 	// ==============================
 
-	renderFileNameAndChangeMessage () {
+	renderFileNamePresentation () {
 		const href = this.props.value ? this.props.value.url : undefined;
+		let presentation = (
+			<FileChangeMessage component={href ? 'a' : 'span'} href={href} target="_blank">
+				{this.getFilename()}
+			</FileChangeMessage>
+		);
+		//Add image preview if mime type of file is image.		
+		if (href !== undefined && 
+			this.props.value &&
+			this.props.value.mimetype.startsWith("image")){
+			presentation = (
+				<div>
+					<div>
+						<FileChangeMessage component={'img'} src={href} style={imgStyle} />
+					</div>
+					<div>
+						{presentation}
+					</div>
+				</div>
+			);			
+		}
+		return presentation;
+	},
+	renderFileNameAndChangeMessage () {
 		return (
 			<div>
-				{(this.hasFile() && !this.state.removeExisting) ? (
-					<FileChangeMessage component={href ? 'a' : 'span'} href={href} target="_blank">
-						{this.getFilename()}
-					</FileChangeMessage>
-				) : null}
+				{(this.hasFile() && !this.state.removeExisting) ? 
+					this.renderFileNamePresentation()
+				: null}
 				{this.renderChangeMessage()}
 			</div>
 		);
