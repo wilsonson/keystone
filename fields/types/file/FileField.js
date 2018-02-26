@@ -25,10 +25,10 @@ const buildInitialState = (props) => ({
 });
 
 const imgStyle = {
-	"maxWidth": "100%",
-	"width":"auto",
-	"height": "auto"
-}
+	maxWidth: '100%',
+	width: 'auto',
+	height: 'auto',
+};
 
 module.exports = Field.create({
 	propTypes: {
@@ -134,10 +134,10 @@ module.exports = Field.create({
 				{this.getFilename()}
 			</FileChangeMessage>
 		);
-		//Add image preview if mime type of file is image.		
-		if (href !== undefined && 
-			this.props.value &&
-			this.props.value.mimetype.startsWith("image")){
+		// Add image preview if mime type of file is image.
+		if (href !== undefined
+			&& this.props.value
+			&& this.props.value.mimetype.startsWith('image')) {
 			presentation = (
 				<div>
 					<div>
@@ -147,15 +147,15 @@ module.exports = Field.create({
 						{presentation}
 					</div>
 				</div>
-			);			
+			);
 		}
 		return presentation;
 	},
 	renderFileNameAndChangeMessage () {
 		return (
 			<div>
-				{(this.hasFile() && !this.state.removeExisting) ? 
-					this.renderFileNamePresentation()
+				{(this.hasFile() && !this.state.removeExisting)
+				? this.renderFileNamePresentation()
 				: null}
 				{this.renderChangeMessage()}
 			</div>
